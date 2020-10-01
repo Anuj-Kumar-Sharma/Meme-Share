@@ -1,4 +1,5 @@
-# Meme-Share
+# Meme-Share App
+This app is create kotlin.
 An android app which lets you share memes among your friends.
 
 Youtube playlist for this Project: https://bit.ly/3hGQOfS
