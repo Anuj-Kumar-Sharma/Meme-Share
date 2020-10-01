@@ -3,6 +3,8 @@ package com.example.sharememes
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -30,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadMeme() {
         nextButton.isEnabled = false
-        shareButton.isEnabled = false
+        //shareButton.isEnabled = false
         progressBar.visibility = View.VISIBLE
         val url = "https://meme-api.herokuapp.com/gimme"
 
@@ -50,7 +52,7 @@ class MainActivity : AppCompatActivity() {
                     ): Boolean {
                         progressBar.visibility = View.GONE
                         nextButton.isEnabled = true
-                        shareButton.isEnabled = true
+                        //shareButton.isEnabled = true
                         return false
                     }
 
@@ -78,10 +80,23 @@ class MainActivity : AppCompatActivity() {
         loadMeme()
     }
 
-    fun shareMeme(view: View) {
+    fun shareMeme() {
         val i = Intent(Intent.ACTION_SEND)
         i.type = "text/plain"
         i.putExtra(Intent.EXTRA_TEXT, "Hi, checkout this meme $currentMemeUrl")
         startActivity(Intent.createChooser(i, "Share this meme with"))
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.my_menu,menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId ==R.id.share_meme){
+            shareMeme()
+
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
