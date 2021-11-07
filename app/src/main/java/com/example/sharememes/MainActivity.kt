@@ -25,10 +25,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        loadMeme()
+        loadMemes()
     }
 
-    private fun loadMeme() {
+    private fun loadMemes() {
         nextButton.isEnabled = false
         shareButton.isEnabled = false
         progressBar.visibility = View.VISIBLE
@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         // Request a string response from the provided URL.
         val jsonObjectRequest = JsonObjectRequest(
             Request.Method.GET, url, null,
-            Response.Listener { response ->
+            { response ->
                 currentMemeUrl = response.getString("url")
 
                 Glide.with(this).load(currentMemeUrl).listener(object : RequestListener<Drawable>{
@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }).into(memeImageView)
             },
-            Response.ErrorListener {
+            {
                 progressBar.visibility = View.GONE
                 Toast.makeText(this, "Something went wrong", Toast.LENGTH_LONG).show()
             })
@@ -75,13 +75,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showNextMeme(view: View) {
-        loadMeme()
+        loadMemes()
     }
 
     fun shareMeme(view: View) {
-        val i = Intent(Intent.ACTION_SEND)
-        i.type = "text/plain"
-        i.putExtra(Intent.EXTRA_TEXT, "Hi, checkout this meme $currentMemeUrl")
-        startActivity(Intent.createChooser(i, "Share this meme with"))
+
     }
 }
