@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Request
@@ -18,14 +19,36 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
-
+    private lateinit var memeImageView:ImageView
     var currentMemeUrl: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        memeImageView=findViewById(R.id.memeImageView)
 
         loadMeme()
+        memeImageView.setOnTouchListener(object : OnSwipeTouchListener(this){
+            override fun onSwipeRight() {
+
+                // Toast.makeText(this@GuestureActivity, "Swipe Right gesture detected", Toast.LENGTH_SHORT).show();
+                loadMeme()
+
+
+            }
+
+
+
+            override fun onSwipeLeft() {
+                // Toast.makeText(this@GuestureActivity, "Swipe Left gesture detected", Toast.LENGTH_SHORT).show();
+                loadMeme()
+            }
+
+
+        })
+
+
+
     }
 
     private fun loadMeme() {
